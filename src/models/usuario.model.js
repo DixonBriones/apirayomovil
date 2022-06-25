@@ -27,4 +27,9 @@ const schemaUser = new Schema(
     }
 )
 
+schemaUser.methods.toJSON = function(){
+    const {__v, ...data}=this.toObject();
+    return data;
+  }
+
 module.exports = model('usuario', schemaUser)

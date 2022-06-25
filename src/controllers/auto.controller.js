@@ -10,4 +10,9 @@ const insertarAuto = async (req, res = response) => {
     res.json(nuevoAuto);
   }
 
-  module.exports={insertarAuto};
+const readAuto = async (req, res) => {
+    const data = await AutoModel.find()
+    res.status(200).json(data)
+}
+
+  module.exports={insertarAuto,readAuto};
