@@ -1,1 +1,3 @@
-console.log("Hola")
+const Servidor = require('./src/server')
+const server = new Servidor()
+server.listen()

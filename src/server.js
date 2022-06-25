@@ -1,10 +1,11 @@
 const express = require('express')
+const {PORT}=require('./config');
 
 
 class Servidor{
     constructor(){
         this.app = express()
-        this.port = process.env.PORT
+        this.port = PORT
 
         require('./config/dbc').dbc()
 
@@ -17,13 +18,14 @@ class Servidor{
     }
 
     routes(){
-        this.app.use('/api/v1/user', require('./routes/user.routes'))
+        this.app.use('/api/v1/user', require('./routes/user.routes')),
+        this.app.use('/api/v1/auto', require('./routes/auto.routes'))
 
     }
 
     listen(){
         this.app.listen(this.port, () => {
-            console.log(`Servidor a su servicio en el puerto ${this.port}`)
+            console.log(`Servicio funcionando correctamente en http://localhost:${this.port}`)
         })
     }
 }

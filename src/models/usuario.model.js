@@ -27,4 +27,4 @@ const schemaUser = new Schema(
     }
 )
 
-module.exports = model('collectionUser', schemaUser)
+module.exports = model('usuario', schemaUser)

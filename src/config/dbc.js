@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
+const {MONGO_URI}=require('./index');
 
 module.exports.dbc = async () => {
     try{
-        await mongoose.connect(process.env.MONGO_URI)
+        await mongoose.connect(MONGO_URI)
         console.log('Conexion exitosa con la base de datos')
     }catch(err){
         console.error(err)
