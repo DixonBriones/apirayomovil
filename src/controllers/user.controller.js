@@ -1,7 +1,8 @@
 const { UserModel } = require('../models')
 
-const createUser = async (req, res) => {
+const register = async (req, res) => {
     const { ...data } = req.body
+    const { password } = req.body
     const existeUser = await UserModel.findOne({
         telefono : data.telefono
     })
@@ -9,8 +10,26 @@ const createUser = async (req, res) => {
         return res.json({msg: `El numero de telefono: ${data.telefono} ya se encuentra registrado`})
     }
     const user = new UserModel(data);
+    user.password = await user.encryptPassword(password)
     const userCreate = await user.save();
     res.status(200).json({msg: `El usuario fue creado satisfactoriamente`})
+}
+
+const login = async (req, res) => {
+    const { username, password } = req.body
+    const existeUser = await UserModel.findOne({
+        username : username
+    })
+    if(!existeUser){
+        return res.json({msg: 'Usuario no encontrado'})
+    }else{
+        const comparacion = await existeUser.comparePassword(password)
+        if(!comparacion){
+            return res.json({msg: 'Contraseña incorrecta'})
+        }else{
+            return res.json({msg: 'Bienvenid@'})
+        }
+    }
 }
 
 const readUser = async (req, res) => {
@@ -31,4 +50,4 @@ const deleteUser = async (req, res) => {
     res.status(200).json({msg: `El usuario fue eliminado satisfactoriamente`})
 }
 
-module.exports = { createUser, readUser, updateUser, deleteUser }
+module.exports = { register, login, readUser, updateUser, deleteUser }
