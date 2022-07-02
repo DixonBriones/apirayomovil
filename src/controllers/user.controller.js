@@ -1,18 +1,22 @@
 const { UserModel } = require('../models')
+const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
-    const { ...data } = req.body
-    const { password } = req.body
+    const { useremail, username, password } = req.body
     const existeUser = await UserModel.findOne({
-        telefono : data.telefono
+        username: username
     })
     if(existeUser){
-        return res.json({msg: `El numero de telefono: ${data.telefono} ya se encuentra registrado`})
+        return res.json({msg: `El username: ${username} ya se encuentra registrado`})
     }
-    const user = new UserModel(data);
+    const user = new UserModel({useremail, username, password});
     user.password = await user.encryptPassword(password)
     const userCreate = await user.save();
-    res.status(200).json({msg: `El usuario fue creado satisfactoriamente`})
+
+    const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
+        expiresIn: 60*60*24
+    })
+    res.status(200).json({msg: `El usuario fue creado satisfactoriamente`, auth: true, token})
 }
 
 const login = async (req, res) => {
@@ -27,7 +31,8 @@ const login = async (req, res) => {
         if(!comparacion){
             return res.json({msg: 'Contraseña incorrecta'})
         }else{
-            return res.json({msg: 'Bienvenid@'})
+            const token = jwt.sign({id: existeUser._id}, process.env.JWT_SECRET, { expiresIn: 86400 })
+            return res.json({msg: 'Bienvenid@', auth: true, accessToken : token})
         }
     }
 }
