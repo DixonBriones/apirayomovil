@@ -11,6 +11,10 @@ const AutoSchema = new Schema(
       type:String,
       required:[ true, 'La marca es requerida'],
       unique:false },
+    foto: { 
+      type: String, 
+      required:[ true, 'La foto del auto es requerida'],
+      unique:false },
     modelo: { 
       type: String, 
       required:[ true, 'El modelo del auto es requerida'],
