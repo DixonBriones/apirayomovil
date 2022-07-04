@@ -36,7 +36,7 @@ const AutoSchema = new Schema(
 )
 
 AutoSchema.methods.toJSON = function(){
-  const {__v,_id, ...data}=this.toObject();
+  const {__v, ...data}=this.toObject();
   return data;
 }
 
