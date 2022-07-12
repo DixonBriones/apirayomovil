@@ -55,4 +55,14 @@ const deleteUser = async (req, res) => {
     res.status(200).json({msg: `El usuario fue eliminado satisfactoriamente`})
 }
 
-module.exports = { register, login, readUser, updateUser, deleteUser }
+const readOneUser = async (req, res) =>{
+    const { username } = req.params
+    const data = await UserModel.findOne(username)
+    if(data){
+        res.status(200).send(data)
+    }else{
+        res.json({msg: `Usuario no encontrado`})
+    }   
+}
+
+module.exports = { register, login, readUser, updateUser, deleteUser, readOneUser }
