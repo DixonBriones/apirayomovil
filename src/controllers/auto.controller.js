@@ -30,7 +30,6 @@ const readAutoByID = async (req, res) => {
 
 const readAutoUser = async (req, res) =>{
   const data = await AutoModel.find({usuario: req.userId})
-  console.log(data)
   res.status(200).json(data)
 }
 
