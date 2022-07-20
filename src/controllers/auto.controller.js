@@ -1,11 +1,16 @@
 const {response}= require('express')
 const { AutoModel } = require('../models')
+const cloudinary = require("../config/cloudinary");
+const upload = require("../middlewares/uploadimg");
 
 const jwt = require('jsonwebtoken')
 
 
 const insertarAuto = async (req, res = response) => {
     const{...body}=req.body;
+    const result = await cloudinary.uploader.upload(req.file.path);
+    const URLIMG = result.url
+    body.foto=URLIMG
     console.log(body);
     const autos = new AutoModel(body);
     const nuevoAuto= await autos.save();
