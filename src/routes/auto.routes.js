@@ -6,7 +6,7 @@ const { verifyToken } = require('../middlewares')
 
 AutoRouter.post('/', controllers.ApiAutoController.insertarAuto)
 AutoRouter.get('/', controllers.ApiAutoController.readAuto)
-//AutoRouter.get('/findById/:id',controllers.ApiAutoController.readAutoByID)
+AutoRouter.get('/findById/:id',controllers.ApiAutoController.readAutoByID)
 
 AutoRouter.get('/:id', verifyToken.verifyToken, controllers.ApiAutoController.readAutoUser)
 AutoRouter.delete('/:id', controllers.ApiAutoController.deleteAuto)
