@@ -19,6 +19,9 @@ const schemaUser = new Schema(
         },
         password : {
             type : String
+        },
+        location :{
+            type: String
         }
     },
     {

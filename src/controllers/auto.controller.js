@@ -39,4 +39,12 @@ const deleteAuto = async (req, res) =>{
   res.status(200).json({msg: `El auto fue eliminado satisfactoriamente`})
 }
 
-module.exports={insertarAuto,readAuto,readAutoByID, deleteAuto, readAutoUser};
+const statusAuto = async (req, res) => {
+  const { id } = req.params;
+  const estado = await AutoModel.findById(id)
+  estado.status = !estado.status
+  await estado.save()
+  res.status(200).json({msg: `Estado del auto modificado satisfactoriamente`})
+}
+
+module.exports={insertarAuto,readAuto,readAutoByID, deleteAuto, readAutoUser, statusAuto};

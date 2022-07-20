@@ -10,5 +10,6 @@ AutoRouter.get('/', controllers.ApiAutoController.readAuto)
 
 AutoRouter.get('/:id', verifyToken.verifyToken, controllers.ApiAutoController.readAutoUser)
 AutoRouter.delete('/:id', controllers.ApiAutoController.deleteAuto)
+AutoRouter.get('/status/:id', controllers.ApiAutoController.statusAuto)
 
 module.exports = AutoRouter

@@ -41,6 +41,10 @@ const AutoSchema = new Schema(
     date: { 
       type: Date, default: Date.now 
     },
+    status: {
+      type: Boolean,
+      default: false
+    }
   }
 )
 

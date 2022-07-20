@@ -32,7 +32,7 @@ const login = async (req, res) => {
             return res.json({msg: 'Contraseña incorrecta'})
         }else{
             const token = jwt.sign({id: existeUser._id}, process.env.JWT_SECRET, { expiresIn: 86400 })
-            return res.json({msg: 'Bienvenid@', auth: true, accessToken : token, username: username, _id : existeUser._id, telefono: existeUser.telefono, firstname: existeUser.firstname, lastname: existeUser.lastname, usermail: existeUser.useremail})
+            return res.json({msg: 'Bienvenid@', auth: true, accessToken : token, username: username, _id : existeUser._id, telefono: existeUser.telefono, firstname: existeUser.firstname, lastname: existeUser.lastname, useremail: existeUser.useremail, location : existeUser.location})
         }
     }
 }
