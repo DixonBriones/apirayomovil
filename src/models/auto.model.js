@@ -38,6 +38,9 @@ const AutoSchema = new Schema(
       //required:[ true, 'El precio por dia del auto es requerido'],
       //unique:false 
     },
+    date: { 
+      type: Date, default: Date.now 
+    },
   }
 )
 

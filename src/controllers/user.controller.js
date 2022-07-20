@@ -1,15 +1,15 @@
-const { UserModel } = require('../models')
+const { UserModel, AutoModel } = require('../models')
 const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
-    const { useremail, username, password } = req.body
+    const { telefono, username, password } = req.body
     const existeUser = await UserModel.findOne({
         username: username
     })
     if(existeUser){
         return res.json({msg: `El username: ${username} ya se encuentra registrado`})
     }
-    const user = new UserModel({useremail, username, password});
+    const user = new UserModel({telefono, username, password});
     user.password = await user.encryptPassword(password)
     const userCreate = await user.save();
 
@@ -32,7 +32,7 @@ const login = async (req, res) => {
             return res.json({msg: 'Contraseña incorrecta'})
         }else{
             const token = jwt.sign({id: existeUser._id}, process.env.JWT_SECRET, { expiresIn: 86400 })
-            return res.json({msg: 'Bienvenid@', auth: true, accessToken : token, username: username, _id : existeUser._id})
+            return res.json({msg: 'Bienvenid@', auth: true, accessToken : token, username: username, _id : existeUser._id, telefono: existeUser.telefono, firstname: existeUser.firstname, lastname: existeUser.lastname, usermail: existeUser.useremail})
         }
     }
 }
@@ -49,9 +49,10 @@ const updateUser = async (req, res) => {
     res.status(200).json({msg: `El usuario fue actualizado satisfactoriamente`})
 }
 
-const deleteUser = async (req, res) => {
+const deleteAccount = async (req, res) => {
     const { id } = req.params;
     const userDelete = await UserModel.findByIdAndRemove(id)
+    const autoUserDelete = await AutoModel.deleteMany({ usuario : id})
     res.status(200).json({msg: `El usuario fue eliminado satisfactoriamente`})
 }
 
@@ -65,4 +66,4 @@ const readOneUser = async (req, res) =>{
     }   
 }
 
-module.exports = { register, login, readUser, updateUser, deleteUser, readOneUser }
+module.exports = { register, login, readUser, updateUser, deleteAccount, readOneUser }
