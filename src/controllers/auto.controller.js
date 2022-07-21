@@ -24,12 +24,14 @@ const readAuto = async (req, res) => {
 
 const readAutoByID = async (req, res) => {
   const{id}=req.params;
-  const datos = await AutoModel.findById(id).populate({ path: 'usuario', select: 'username -_id' })
-  const {username, ...rest }=datos.usuario
+  const datos = await AutoModel.findById(id).populate({ path: 'usuario'})
+  const {username,telefono, ...rest }=datos.usuario
   const data = datos.toObject();
   delete data["usuario"];
   delete data["__v"]
+  data.telefono=telefono
   data.usuario=username
+  console.log(data)
   res.status(200).json(data)
 }
 
