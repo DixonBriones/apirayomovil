@@ -18,7 +18,7 @@ const insertarAuto = async (req, res = response) => {
 }
 
 const readAuto = async (req, res) => {
-    const data = await AutoModel.find().sort({ date: "desc" })
+    const data = await AutoModel.find({status: true}).sort({ date: "desc"})
     res.status(200).json(data)
 }
 
