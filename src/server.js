@@ -20,7 +20,8 @@ class Servidor{
 
     routes(){
         this.app.use('/api/v1/user', require('./routes/user.routes')),
-        this.app.use('/api/v1/auto', require('./routes/auto.routes'))
+        this.app.use('/api/v1/auto', require('./routes/auto.routes')),
+        this.app.use('/api/v1/alquiler', require('./routes/alquiler.routes'))
 
     }
 
