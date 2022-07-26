@@ -7,7 +7,7 @@ const AutoRouter = express.Router()
 const { verifyToken } = require('../middlewares')
 
 AutoRouter.post('/',upload.single('imagen'), controllers.ApiAutoController.insertarAuto)
-AutoRouter.get('/', controllers.ApiAutoController.readAuto)
+AutoRouter.get('/',verifyToken.verifyToken, controllers.ApiAutoController.readAuto)
 AutoRouter.get('/findById/:id',controllers.ApiAutoController.readAutoByID)
 
 AutoRouter.get('/:id', verifyToken.verifyToken, controllers.ApiAutoController.readAutoUser)
